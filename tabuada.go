@@ -10,7 +10,10 @@ import (
 )
 
 func main() {
-	fmt.Println("Seja bem vinda ao quiz de tabuada :D")
+	reader := bufio.NewReader(os.Stdin)
+	fmt.Print("Insira o seu nome:")
+	nome, _ := reader.ReadString('\n')
+	fmt.Println("Seja bem vinda ao quiz de tabuada", nome)
 	finalResult := 0
 	index := 0
 	for index < 10 {
@@ -25,8 +28,8 @@ func exercise() int {
 	reader := bufio.NewReader(os.Stdin)
 
 	rand.Seed(time.Now().UnixNano())
-	multiplier := rand.Intn(11)
-	by := rand.Intn(11)
+	multiplier := randomizeNumbers()
+	by := randomizeNumbers()
 
 	fmt.Print("Quanto é ", multiplier, " x ", by, " = ")
 	value, _ := reader.ReadString('\n')
@@ -45,4 +48,13 @@ func exercise() int {
 		fmt.Print("A resposta certa é ", multiplier, " x ", by, " = ", multiplier*by, "\n")
 		return 0
 	}
+}
+
+func randomizeNumbers() int {
+	value := 0
+	for value <= 1 || value == 10 {
+		rand.Seed(time.Now().UnixNano())
+		value = rand.Intn(11)
+	}
+	return value
 }
